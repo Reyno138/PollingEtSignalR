@@ -15,6 +15,8 @@ export default function Home() {
 
   function handleTaskAdd(taskName: string) {
     // TODO On invoke la méthode pour ajouter une tâche sur le serveur (Contrôleur d'API)
+    const result = axios.post("https://localhost:7289/api/UselessTasks/Add?taskText=" + taskName)
+    console.log(result)
   }
 
   function onTaskToggle(id: number) {
@@ -30,8 +32,15 @@ export default function Home() {
       { id: 1, text: "Test Task 1", completed: false },
       { id: 2, text: "Test Task 2", completed: true });
     setTasks(testTasks);
+    const result1 = axios.post("https://localhost:7289/api/UselessTasks/Add?taskText=HaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHaHa")
+    const result2 = axios.post("https://localhost:7289/api/UselessTasks/Add?taskText=hAhAhAhAhAhAhAhAhAhAhAhAhAhAhAhAhAhAhAhA")
     // TODO: Faire une première implémentation simple avec un appel au serveur pour obtenir la liste des tâches
+    const result = await axios.get<UselessTask[]>("https://localhost:7289/api/UselessTasks/GetAll")
+    console.log(result.data)
+    setTasks(c => [...testTasks, ...result.data])
     // TODO: UNE FOIS QUE VOUS AVEZ TESTER AVEC DEUX CLIENTS: Utiliser le polling pour mettre la liste de tasks à jour chaque seconde
+
+    setTimeout(() => {updateTasks()}, 5);
   }
 
   return (
